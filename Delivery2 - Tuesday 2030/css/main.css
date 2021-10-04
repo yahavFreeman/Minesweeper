@@ -1,0 +1,97 @@
+body{
+    text-align: center;
+    /* background-color:lightpink; */
+}
+.first-row{
+    padding: 2%;
+}
+.smiley{
+    margin-right: 30px;
+    margin-left: 30px;
+}
+.first{
+    padding: 10px;
+}
+.life{
+    margin-top: 1%;
+}
+
+table{
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 1px black;
+    table-layout: fixed;
+}
+
+.third-row{
+    margin-top: 30px;
+}
+
+/* table const */
+td{
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border: solid 1px black;
+    overflow: hidden;
+    color: transparent
+}
+table{
+    table-layout: fixed;
+    empty-cells: show;
+}
+img {
+   height: 15px;
+   width: 15px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+ .armed>img{
+    height: 15px;
+   width: 15px;
+   text-align: center;
+    display: none;
+ } 
+
+
+/* mines hiding */
+.cell{
+    background-color: lightblue;
+    color: lightblue;
+    text-align: center;
+    
+}
+.cell:hover{
+    cursor: pointer;
+    background-color: cornflowerblue;
+    color: transparent;
+}
+.mark0{
+    color: transparent;
+    background-color: gray;
+}
+.mark1{
+    color: green;
+    background-color: gray;
+}
+.mark2{
+    color: blue;
+    background-color: gray;
+}
+.mark3{
+    color: rgb(228, 59, 59);
+    background-color: gray;
+}
+.mark4{
+    color: rgb(51, 12, 12);
+    background-color:gray;
+}
+
+.show{
+    background-color: crimson;
+    display: block;
+}
+
