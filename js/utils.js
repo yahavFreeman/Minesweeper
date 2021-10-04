@@ -123,32 +123,29 @@ function countNeighbors(mat, rowIdx, colIdx) {
   return count;
 }
 
-function neighbors(mat, rowIdx, colIdx) {
-  var neighbors=[{
-    i:i,
-    j:j
-  }]
-  var counter=0
-  for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-    if (i < 0 || i > mat.length - 1) {
-      continue;
-    }
-    for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-      if (j < 0 || j > mat[0].length - 1) {
-        continue;
-      }
-      if (i === rowIdx && j === colIdx) continue;
-      if (!mat[i][j].isMine) {
-        neighbors[counter].i;
-      }
-    }
-  }
-  return neighbors;
-}
-  {
-
-
-}
+// function neighbors(mat, rowIdx, colIdx) {
+//   var neighbors=[{
+//     i:i,
+//     j:j
+//   }]
+//   var counter=0
+//   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+//     if (i < 0 || i > mat.length - 1) {
+//       continue;
+//     }
+//     for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+//       if (j < 0 || j > mat[0].length - 1) {
+//         continue;
+//       }
+//       if (i === rowIdx && j === colIdx) continue;
+//       if (!mat[i][j].isMine) {
+//         neighbors[counter].i;
+//       }
+//     }
+//   }
+//   return neighbors;
+// }
+  
 
 function timer() {
   var eltime = document.querySelector(".timer");
