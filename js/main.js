@@ -1,6 +1,6 @@
 "use strict";
 const MINE = '<img src="img/mines.png" class = "hide">';
-const FLAG = '<img src="img/flag-red-icon.png">';
+const FLAG = '<img src="img/Flag-red-icon.png">';
 const EMPTY = "";
 
 var gBoard = [];
@@ -86,7 +86,7 @@ function placeMines(level) {
   for (var count = 0; count < mines; count++) {
     empties.splice(0,1);
   }
-}else if(is7Boom&&!gotTheMines){
+}else if(is7Boom){
   var iCounter=1
   for (var i = 0; i < gBoard.length; i++) {
     for(var j=0;j<gBoard.length;j++){
@@ -95,6 +95,7 @@ function placeMines(level) {
       if(!gBoard[i][j].isShown){
     renderCell(gBoard[i][j].location, MINE);
     gBoard[i][j].isMine = true;
+    empties.spl
       }
     }
   }
