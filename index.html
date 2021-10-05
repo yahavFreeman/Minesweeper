@@ -25,10 +25,17 @@
         </div>
     </div>
     <div class="board" ></div>
-<div class="bonus">
-    <button class="safe" onclick="safeClick()">Safe Click!</button>
-    <br>
-    <span class="howSafe" ></span>
+<div class="grid-container">
+    <div class="grid-child safe">
+        <button class="safe" onclick="safeClick()">Safe Click!</button>
+        <br>
+            <span class="howSafe" ></span>
+    </div>
+    <div class="grid-child boom" ><button class="boom" onclick="sevenBoom()">7BOOM!</button>
+    </div>
+    <div class="grid-child manual">
+<button class="manual" onclick="manual()">manualy position</button>
+    </div>
 </div>
 <div class="score">
 <div class="highestScore4"></div>    

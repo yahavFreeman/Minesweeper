@@ -47,6 +47,7 @@ function shuffle(items) {
 function renderCell(location, value) {
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.innerHTML = value;
+  console.log(elCell.innerHTML)
   if (value === MINE) {
     elCell.classList.add("armed");
 
@@ -157,6 +158,7 @@ function markCell(location, howManyMines) {
   }
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.classList.add("mark" + howManyMines);
+  elCell.classList.add("mark");
   
 }
 
@@ -172,4 +174,68 @@ if(howManyMines===-1){
   }
 var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
 elCell.classList.remove("mark" + howManyMines);
+elCell.classList.remove("mark");
+}
+
+//setting the life bar
+function life() {
+  var elLife = document.querySelector(".lives");
+  if (gLives === 3) {
+    elLife.innerText = "lives: ❤ ❤ ❤";
+  } else if (gLives === 2) {
+    elLife.innerText = "lives: ❤ ❤";
+  } else if (gLives === 1) {
+    elLife.innerText = "lives: ❤";
+  } else {
+    elLife.innerText = "lives: 0";
+  }
+}
+
+function hintsLeft() {
+  var elHint = document.querySelector(".hint");
+  if (gHint === 3) {
+    elHint.innerText = "hints: 💡 💡 💡";
+  } else if (gHint === 2) {
+    elHint.innerText = "hints: 💡 💡";
+  } else if (gHint === 1) {
+    elHint.innerText = "hints: 💡";
+  } else {
+    elHint.innerText = "hints: 0";
+  }
+}
+
+//making the board less safe
+function lessSafe(){
+  clearInterval(gSafeInterval)
+  var elSafe = document.querySelector(".howSafe");
+  if (gSafeCount === 3) {
+    elSafe.innerText = "3 Clicks Left";
+  } else if (gSafeCount === 2) {
+    elSafe.innerText = "2 Clicks Left";
+  } else if (gSafeCount === 1) {
+    elSafe.innerText = "1 Click Left";
+  } else {
+    elSafe.innerText = "0 Clicks Left";
+  }
+}
+//localStorage record scores
+function getScore(){
+  if (localStorage.sec||localStorage.mili){
+    var elRecord=document.querySelector(".highestScore"+4)
+  elRecord.innerHTML="record time on Easy level: "+localStorage.min+":"+localStorage.sec+":"+localStorage.mili
+}
+if (localStorage.sec8||localStorage.mili8){
+  var elRecord=document.querySelector(".highestScore"+8)
+elRecord.innerHTML="record time on Hard level:  "+localStorage.min8+":"+localStorage.sec8+":"+localStorage.mili8
+}
+if (localStorage.sec12||localStorage.mili12){
+  var elRecord=document.querySelector(".highestScore"+12)
+elRecord.innerHTML="record time on Expert level: "+localStorage.min12+":"+localStorage.sec12+":"+localStorage.mili12
+}
+}
+
+function score() {
+  gScore += 1;
+  var elScore = document.querySelector(".keepScore");
+  elScore.innerText = gScore;
 }

@@ -22,50 +22,10 @@ var canHint
 var empties = [];
 var gSafeCount
 var isSafe={}
-
-
-
-//setting the life bar
-function life() {
-  var elLife = document.querySelector(".lives");
-  if (gLives === 3) {
-    elLife.innerText = "lives: ❤ ❤ ❤";
-  } else if (gLives === 2) {
-    elLife.innerText = "lives: ❤ ❤";
-  } else if (gLives === 1) {
-    elLife.innerText = "lives: ❤";
-  } else {
-    elLife.innerText = "lives: 0";
-  }
-}
-
-function hintsLeft() {
-  var elHint = document.querySelector(".hint");
-  if (gHint === 3) {
-    elHint.innerText = "hints: 💡 💡 💡";
-  } else if (gHint === 2) {
-    elHint.innerText = "hints: 💡 💡";
-  } else if (gHint === 1) {
-    elHint.innerText = "hints: 💡";
-  } else {
-    elHint.innerText = "hints: 0";
-  }
-}
-
-//making the board less safe
-function lessSafe(){
-  clearInterval(gSafeInterval)
-  var elSafe = document.querySelector(".howSafe");
-  if (gSafeCount === 3) {
-    elSafe.innerText = "3 Clicks Left";
-  } else if (gSafeCount === 2) {
-    elSafe.innerText = "2 Clicks Left";
-  } else if (gSafeCount === 1) {
-    elSafe.innerText = "1 Click Left";
-  } else {
-    elSafe.innerText = "0 Clicks Left";
-  }
-}
+var is7Boom=false
+var isManual=false
+var manualMines
+var gotTheMines
 
 // creating and setting the board
 function initGame(row = 4, col = 4) {
@@ -74,6 +34,8 @@ function initGame(row = 4, col = 4) {
   isStart = false;
   gLives = gHint = gSafeCount= 3;
   isGame=true
+  safe=false
+  gotTheMines=false
   lessSafe()
   life();
   hintsLeft();
@@ -84,26 +46,21 @@ function initGame(row = 4, col = 4) {
   buildBoard(row, col);
 }
 
-function getScore(){
-  if (localStorage.sec||localStorage.mili){
-    var elRecord=document.querySelector(".highestScore"+4)
-  elRecord.innerHTML="record time on Easy level: "+localStorage.min+":"+localStorage.sec+":"+localStorage.mili
-}
-if (localStorage.sec8||localStorage.mili8){
-  var elRecord=document.querySelector(".highestScore"+8)
-elRecord.innerHTML="record time on Hard level:  "+localStorage.min8+":"+localStorage.sec8+":"+localStorage.mili8
-}
-if (localStorage.sec12||localStorage.mili12){
-  var elRecord=document.querySelector(".highestScore"+12)
-elRecord.innerHTML="record time on Expert level: "+localStorage.min12+":"+localStorage.sec12+":"+localStorage.mili12
-}
-}
-
 function buildBoard(row, col) {
   gBoard = createMat(row, col);
-
-
   printMat(gBoard, ".board");
+}
+
+function sevenBoom(){
+  is7Boom=true
+  initGame()
+  alert('select your level')
+}
+
+function manual(){
+  isManual=true
+  initGame()
+  alert('select your level')
 }
 
 // placing the mines
@@ -119,8 +76,8 @@ function placeMines(level) {
       mines = 30;
       break;
   }
-
   empties = getEmptyCells(gBoard);
+  if (!is7Boom&&!isManual&&!gotTheMines){
   empties = shuffle(empties);
   for (var count = 0; count < mines; count++) {
     renderCell(empties[count], MINE);
@@ -129,10 +86,38 @@ function placeMines(level) {
   for (var count = 0; count < mines; count++) {
     empties.splice(0,1);
   }
+}else if(is7Boom&&!gotTheMines){
+  var iCounter=1
+  for (var i = 0; i < gBoard.length; i++) {
+    for(var j=0;j<gBoard.length;j++){
+      var count=i+j+iCounter;
+    if((count)%7===0){
+      if(!gBoard[i][j].isShown){
+    renderCell(gBoard[i][j].location, MINE);
+    gBoard[i][j].isMine = true;
+      }
+    }
+  }
+  if (gBoard.length===4){
+  iCounter+=3
+  }else if(gBoard.length===8){
+    iCounter+=7
+  }else if(gBoard.length===12){
+    iCounter+=11
+  }
+  }
+  for (var count = 0; count < mines; count++) {
+    empties.splice(0,1);
+  }
+  is7Boom=false
+}else if(isManual){
+  gotTheMines=true
+  return mines
+}
   countMinesAround();
 }
 
-//neighboring cells
+//creating the game board with mines and neighboring cells with mines
 function countMinesAround() {
   for (var i = 0; i < gBoard.length; i++) {
     for (var j = 0; j < gBoard.length; j++) {
@@ -146,16 +131,19 @@ function countMinesAround() {
     }
   }
 }
-
-function score() {
-  gScore += 1;
-  var elScore = document.querySelector(".keepScore");
-  elScore.innerText = gScore;
+function manualyClick(cell){
+  var locationArr = cell.classList[1].split("-");
+  var location = {
+    i: Number(locationArr[1]),
+    j: Number(locationArr[2]),
+  };
+  renderCell(location,MINE)
+  // removeCellMark(location,MINE)
+  gBoard[location.i][location.j].isMine=true
 }
-
-
 // checking the game events
 function cellClicked(whichCell, leftOrRight) {
+  if (!isManual){
   if(safe&&!isHint){
     safe=false
     gSafeCount--
@@ -164,10 +152,10 @@ function cellClicked(whichCell, leftOrRight) {
    elSafeCell.style.opacity=1
         }
   if (gLives === 0 || !isGame) return;
-  var arr = whichCell.classList[1].split("-");
+  var locationArr = whichCell.classList[1].split("-");
   var location = {
-    i: Number(arr[1]),
-    j: Number(arr[2]),
+    i: Number(locationArr[1]),
+    j: Number(locationArr[2]),
   };
   if (isHint&&isStart) {
     showNeighbors(location.i, location.j, true);
@@ -202,6 +190,31 @@ function cellClicked(whichCell, leftOrRight) {
       markCell(location, gBoard[location.i][location.j].minesCount);
       checkMine(location);
     }
+  }else{
+    if (!gotTheMines){
+      manualMines=placeMines(gBoard.length)
+      gotTheMines=true
+    }
+    var locationArr = whichCell.classList[1].split("-");
+    
+    var location = {
+      i: Number(locationArr[1]),
+      j: Number(locationArr[2]),
+    };
+    console.log(manualMines)
+      console.log(location)
+      renderCell(location,MINE)
+      gBoard[location.i][location.j].isMine=true
+      console.log(gBoard[location.i][location.j])
+      manualMines-=1
+      if(manualMines===0)
+    {
+      console.log('stopping')
+      isManual=false
+    }
+
+  }
+  
 }
 
 // bonus hint task
@@ -225,7 +238,7 @@ function showNeighbors(rowIdx, colIdx, isShow) {
         i: i,
         j: j,
       };
-      if (isShow){
+      if (isShow && !gBoard[i][j].isMarked){
       markCell(loc, gBoard[i][j].minesCount);
       }else if(!gBoard[i][j].isShown){
       removeCellMark(loc, gBoard[i][j].minesCount);
@@ -349,8 +362,8 @@ localStorage.mili=milisec
       for (var i=0;i<empties.length;i++){
         if (!gBoard[empties[i].i][empties[i].j].isShown){
           safe=true
+          break
         }
-        break
       }
       isSafe=empties[i]
       gSafeInterval=setInterval(function(){

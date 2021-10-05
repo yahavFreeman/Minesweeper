@@ -21,9 +21,16 @@ body{
     margin-top: 20px;
     text-align: center;
 }
-.bonus{
-    margin-top: 10px;
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:0px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
 }
+
 
 .third-row{
     margin-top: 30px;
@@ -83,10 +90,16 @@ img {
     color: black;
     background-color: white;
 }
+.mark:hover{
+    cursor: unset;
+    background-color: white;
+    color: black;
+}
 .mark1{
     color: green;
     background-color: white;
 }
+
 .mark2{
     color: blue;
     background-color: white;
