@@ -156,7 +156,7 @@ function score() {
 
 // checking the game events
 function cellClicked(whichCell, leftOrRight) {
-  if(safe){
+  if(safe&&!isHint){
     safe=false
     gSafeCount--
     lessSafe()
