@@ -1,26 +1,49 @@
 body{
     text-align: center;
-    background-color:lightpink;
+    background-color:lightslategray;
+}
+button{
+    border-radius: 10px;
+    background-color: royalblue;
+}
+.keepScore{
+    margin-right: 20px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border:solid 2px black;
+    background-color: lightgoldenrodyellow;
+    
+}
+.timer{
+    margin-left: 20px;
+    padding: 3px;
+    border:solid 2px black;
+    background-color: lightgoldenrodyellow;
+
 }
 .first-row{
     padding: 1%;
 }
 .smiley{
-    margin-right: 30px;
-    margin-left: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px,2px,0px,2px;
 }
 .life{
     margin-top: 1%;
 }
 
 .hint{
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.lives{
+    margin-right: 20px;
 }
 .score{
     margin-top: 20px;
     text-align: center;
-}
+color:red;}
 .grid-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

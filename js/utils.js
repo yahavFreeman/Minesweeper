@@ -180,26 +180,26 @@ elCell.classList.remove("mark");
 function life() {
   var elLife = document.querySelector(".lives");
   if (gLives === 3) {
-    elLife.innerText = "lives: ❤ ❤ ❤";
+    elLife.innerText ="❤ ❤ ❤";
   } else if (gLives === 2) {
-    elLife.innerText = "lives: ❤ ❤";
+    elLife.innerText = "❤ ❤";
   } else if (gLives === 1) {
-    elLife.innerText = "lives: ❤";
+    elLife.innerText = "❤";
   } else {
-    elLife.innerText = "lives: 0";
+    elLife.innerText = "";
   }
 }
 
 function hintsLeft() {
   var elHint = document.querySelector(".hint");
   if (gHint === 3) {
-    elHint.innerText = "hints: 💡 💡 💡";
+    elHint.innerText = "💡 💡 💡";
   } else if (gHint === 2) {
-    elHint.innerText = "hints: 💡 💡";
+    elHint.innerText = "💡 💡";
   } else if (gHint === 1) {
-    elHint.innerText = "hints: 💡";
+    elHint.innerText = "💡";
   } else {
-    elHint.innerText = "hints: 0";
+    elHint.innerText = "";
   }
 }
 
