@@ -4,11 +4,11 @@ function printMat(mat, selector) {
     strHTML += "<tr>";
     for (var j = 0; j < mat[0].length; j++) {
       var cell = mat[i][j];
-      var className = "cell cell" + i + "-" + j;
+      var className = "cell cell-" + i + "-" + j;
       strHTML +=
         '<td class="' +
         className +
-        ' " onclick="cellClicked(this,event)"></td>';
+        ' " onclick="cellClicked(this,event)" style="opacity: 1;"></td>';
     }
     strHTML += "</tr>";
   }
@@ -18,6 +18,7 @@ function printMat(mat, selector) {
 }
 function createMat(ROWS, COLS) {
   var mat = [];
+  var v=0;
   for (var i = 0; i < ROWS; i++) {
     mat[i] = [];
     for (var j = 0; j < COLS; j++) {
@@ -43,23 +44,25 @@ function shuffle(items) {
   return items;
 }
 
-// location such as: {i: 2, j: 7}
 function renderCell(location, value) {
-  // Select the elCell and set the value
-
-  var elCell = document.querySelector(".cell" + location.i + "-" + location.j);
+  var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.innerHTML = value;
   if (value === MINE) {
     elCell.classList.add("armed");
 
+
     if (gBoard[location.i][location.j].isShown) {
       elCell.classList.remove("armed");
+    elCell.classList.remove("cell");
     }
   }
+
   elCell.addEventListener(
     "contextmenu",
     function (ev) {
       ev.preventDefault();
+  if (gLives !== 0 && isGame) {
+   
       if (elCell.innerHTML !== FLAG &&!gBoard[location.i][location.j].isShown) {
         if (gBoard[location.i][location.j].isMine) {
           elCell.classList.remove("armed");
@@ -75,6 +78,7 @@ function renderCell(location, value) {
       }
       checkGameWon();
       return false;
+    }
     },
     false
   );
@@ -119,33 +123,9 @@ function countNeighbors(mat, rowIdx, colIdx) {
       if (mat[i][j].isMine) count++;
     }
   }
-  // console.log(count)
   return count;
 }
 
-// function neighbors(mat, rowIdx, colIdx) {
-//   var neighbors=[{
-//     i:i,
-//     j:j
-//   }]
-//   var counter=0
-//   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-//     if (i < 0 || i > mat.length - 1) {
-//       continue;
-//     }
-//     for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-//       if (j < 0 || j > mat[0].length - 1) {
-//         continue;
-//       }
-//       if (i === rowIdx && j === colIdx) continue;
-//       if (!mat[i][j].isMine) {
-//         neighbors[counter].i;
-//       }
-//     }
-//   }
-//   return neighbors;
-// }
-  
 
 function timer() {
   var eltime = document.querySelector(".timer");
@@ -169,6 +149,27 @@ function markCell(location, howManyMines) {
   if (howManyMines > 4) {
     howManyMines = 4;
   }
-  var elCell = document.querySelector(".cell" + location.i + "-" + location.j);
+  if(howManyMines===-1){
+  var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
+  elCell.classList.remove("armed")
+  return
+
+  }
+  var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.classList.add("mark" + howManyMines);
+  
+}
+
+
+function removeCellMark(location,howManyMines){
+if (howManyMines > 4) {
+  howManyMines = 4;
+}
+if(howManyMines===-1){
+  var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
+  elCell.classList.add("armed")
+  return
+  }
+var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
+elCell.classList.remove("mark" + howManyMines);
 }

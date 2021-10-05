@@ -11,9 +11,9 @@
 
 <body onload="initGame()">
     <div class="first-row">
-        <button class="score first">0</button>
+        <span class="keepScore first">0</span>
         <button class="smiley first" onclick="initGame()">😃</button>
-        <button class="timer first">0:00:0</button>
+        <span class="timer first">0:00:0</span>
     </div>
     <div class="level">
         <button class="easy" onclick="initGame(4,4)">Easy</button>
@@ -21,10 +21,20 @@
         <button class="easy" onclick="initGame(12,12)">Expert</button>
         <div class="life">
             <span class="lives"></span>
+            <button class="hint" onclick="hint()"></button>
         </div>
     </div>
     <div class="board" ></div>
-
+<div class="bonus">
+    <button class="safe" onclick="safeClick()">Safe Click!</button>
+    <br>
+    <span class="howSafe" ></span>
+</div>
+<div class="score">
+<div class="highestScore4"></div>    
+<div class="highestScore8"></div>    
+<div class="highestScore12"></div>    
+</div>
 
 
     <script src="js/main.js"></script>
