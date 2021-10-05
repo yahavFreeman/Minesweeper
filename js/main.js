@@ -95,10 +95,10 @@ function placeMines(level) {
       if(!gBoard[i][j].isShown){
     renderCell(gBoard[i][j].location, MINE);
     gBoard[i][j].isMine = true;
-    empties.spl
       }
     }
   }
+  
   if (gBoard.length===4){
   iCounter+=3
   }else if(gBoard.length===8){
@@ -202,15 +202,11 @@ function cellClicked(whichCell, leftOrRight) {
       i: Number(locationArr[1]),
       j: Number(locationArr[2]),
     };
-    console.log(manualMines)
-      console.log(location)
       renderCell(location,MINE)
       gBoard[location.i][location.j].isMine=true
-      console.log(gBoard[location.i][location.j])
       manualMines-=1
       if(manualMines===0)
     {
-      console.log('stopping')
       isManual=false
     }
 
@@ -241,7 +237,7 @@ function showNeighbors(rowIdx, colIdx, isShow) {
       };
       if (isShow && !gBoard[i][j].isMarked){
       markCell(loc, gBoard[i][j].minesCount);
-      }else if(!gBoard[i][j].isShown){
+      }else if(!gBoard[i][j].isShown&&!gBoard[i][j].isMarked){
       removeCellMark(loc, gBoard[i][j].minesCount);
       }  
     }
@@ -360,6 +356,8 @@ localStorage.mili=milisec
 
   function safeClick(){
     if(isStart&&isGame&&!safe){
+  empties = getEmptyCells(gBoard);
+  if(empties.length===0)return
       for (var i=0;i<empties.length;i++){
         if (!gBoard[empties[i].i][empties[i].j].isShown){
           safe=true

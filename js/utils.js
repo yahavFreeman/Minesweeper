@@ -47,7 +47,6 @@ function shuffle(items) {
 function renderCell(location, value) {
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.innerHTML = value;
-  console.log(elCell.innerHTML)
   if (value === MINE) {
     elCell.classList.add("armed");
 
