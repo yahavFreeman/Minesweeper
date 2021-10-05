@@ -275,7 +275,6 @@ function expand(rowIdx, colIdx) {
         !gBoard[i][j].isShown &&
         !gBoard[i][j].isMine
       ) {
-        console.log(loc[expandCounter]);
         score();
         gBoard[i][j].isShown = true;
         expandCounter++;
@@ -287,7 +286,6 @@ function expand(rowIdx, colIdx) {
           !gBoard[i][j].isMine &&
           !gBoard[i][j].isShown
         ) {
-          console.log(loc[expandCounter]);
           score();
         }
         gBoard[i][j].isShown = true;
