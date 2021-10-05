@@ -241,7 +241,7 @@ function hint() {
     isHint = true;
   }
 }
-
+//creating the expand recursion feature
 function expand(rowIdx, colIdx) {
   var loc = [];
   if (expandEnter) {
