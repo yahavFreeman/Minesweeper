@@ -209,7 +209,7 @@ function cellClicked(whichCell, leftOrRight) {
       gBoard[location.i][location.j].isShown = true;
       markCell(location, gBoard[location.i][location.j].minesCount);
       checkMine(location);
-    } else if (
+    } else if (!isHint&&
       !gBoard[location.i][location.j].isShown &&
       leftOrRight.button === 0 &&
       !gBoard[location.i][location.j].isMarked &&
@@ -251,6 +251,9 @@ function hint() {
 //creating the expand recursion feature
 function expand(rowIdx, colIdx) {
   var loc = [];
+  if(isHint){
+    return
+  }
   if (expandEnter) {
     score();
     expandEnter = false;
