@@ -180,11 +180,11 @@ elCell.classList.remove("mark");
 function life() {
   var elLife = document.querySelector(".lives");
   if (gLives === 3) {
-    elLife.innerText ="❤ ❤ ❤";
+    elLife.innerText ="🖤 🖤 🖤";
   } else if (gLives === 2) {
-    elLife.innerText = "❤ ❤";
+    elLife.innerText = "🖤 🖤";
   } else if (gLives === 1) {
-    elLife.innerText = "❤";
+    elLife.innerText = "🖤";
   } else {
     elLife.innerText = "";
   }
@@ -195,11 +195,11 @@ function hintsLeft() {
   if (gHint === 3) {
     elHint.innerText = "💡 💡 💡";
   } else if (gHint === 2) {
-    elHint.innerText = "💡 💡";
+    elHint.innerText = "💡 💡❌";
   } else if (gHint === 1) {
-    elHint.innerText = "💡";
+    elHint.innerText = "💡❌❌";
   } else {
-    elHint.innerText = "";
+    elHint.innerText = "❌❌❌";
   }
 }
 
