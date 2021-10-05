@@ -113,6 +113,11 @@ function placeMines(level) {
     for (var count = 0; count < mines; count++) {
       empties.splice(0, 1);
     }
+    if(is7Boom&&gBoard.length===8){
+      mines=9
+    }else if(is7Boom&&gBoard.length===12){
+      mines=20
+    }
     is7Boom = false;
   } else if (isManual) {
     gotTheMines = true;
@@ -135,6 +140,8 @@ function countMinesAround() {
     }
   }
 }
+
+//manual mining option
 function manualyClick(cell) {
   var locationArr = cell.classList[1].split("-");
   var location = {
