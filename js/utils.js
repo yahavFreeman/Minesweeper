@@ -183,11 +183,11 @@ function life() {
   if (gLives === 3) {
     elLife.innerText ="🖤 🖤 🖤";
   } else if (gLives === 2) {
-    elLife.innerText = "🖤 🖤  ";
+    elLife.innerText = "🖤 🖤💥";
   } else if (gLives === 1) {
-    elLife.innerText = "🖤      ";
+    elLife.innerText = "🖤 💥💥";
   } else {
-    elLife.innerText = "";
+    elLife.innerText = "💥💥💥";
   }
 }
 

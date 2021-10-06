@@ -27,6 +27,10 @@ var manualMines;
 var gotTheMines;
 var expandCounter;
 var expandEnter;
+var winSound= new Audio("sound/win.mp3")
+var mineSound= new Audio("sound/mine.mp3")
+var recursionSound=new Audio("sound/rec.mp3")
+var gameOverSound=new Audio("sound/over.mp3")
 
 // creating and setting the board
 function initGame(row = 4, col = 4) {
@@ -156,7 +160,6 @@ function manualyClick(cell) {
 
 // checking the game events with correlation with the game features
 function cellClicked(whichCell, leftOrRight) {
-  console.log('in')
   if (!isManual) {
     if (safe && !gIsHint) {
       safe = false;
@@ -298,6 +301,7 @@ function expand(rowIdx, colIdx) {
       }
     }
   }
+  recursionSound.play()
 }
 
 //showing neighboring cells for the hint feature
@@ -328,6 +332,7 @@ function showNeighbors(rowIdx, colIdx, isShow) {
 function checkMine(location) {
   var elSmiley = document.querySelector(".smiley");
   if (gBoard[location.i][location.j].isMine === true) {
+    mineSound.play()
     gLives--;
     renderCell(location, MINE);
     life();
@@ -347,6 +352,7 @@ function checkMine(location) {
 }
 
 function gameOver() {
+  gameOverSound.play()
   clearInterval(gTimeInterval);
   isGame = false;
 }
@@ -366,6 +372,7 @@ function checkGameWon() {
         }
       }
     }
+    winSound.play()
     clearInterval(gTimeInterval);
     checkRecord();
     isGame=false
