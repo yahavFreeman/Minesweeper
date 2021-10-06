@@ -50,7 +50,9 @@ function renderCell(location, value) {
   }
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.innerHTML = value;
+  
   if (value === MINE) {
+    elCell.innerHTML = value;
     elCell.classList.add("armed");
     if (gBoard[location.i][location.j].isShown) {
       elCell.classList.remove("armed");
@@ -78,6 +80,13 @@ function renderCell(location, value) {
           elCell.classList.add("armed");
         }
       }
+      if (!gIsStart) {
+        gTimeInterval = setInterval(function () {
+          timer();
+        }, 100);
+        gIsStart = true;
+      }
+
       checkGameWon(); 
       return false   
     },
@@ -143,8 +152,8 @@ function timer() {
     min += 1;
   }
   if (sec < 10) {
-    eltime.innerText = min + ":0" + sec + ":" + milisec;
-  } else eltime.innerText = min + ":" + sec + ":" + milisec;
+    eltime.innerText = min + ":0" + sec + "." + milisec;
+  } else eltime.innerText = min + ":" + sec + "." + milisec;
 }
 
 function markCell(location, howManyMines) {
@@ -222,15 +231,15 @@ function lessSafe(){
 function getScore(){
   if (localStorage.sec||localStorage.mili){
     var elRecord=document.querySelector(".highestScore"+4)
-  elRecord.innerHTML="record time on Easy level: "+localStorage.min+":"+localStorage.sec+":"+localStorage.mili
+  elRecord.innerHTML="record time on Easy level: "+localStorage.min+":"+localStorage.sec+"."+localStorage.mili
 }
 if (localStorage.sec8||localStorage.mili8){
   var elRecord=document.querySelector(".highestScore"+8)
-elRecord.innerHTML="record time on Hard level:  "+localStorage.min8+":"+localStorage.sec8+":"+localStorage.mili8
+elRecord.innerHTML="record time on Hard level:  "+localStorage.min8+":"+localStorage.sec8+"."+localStorage.mili8
 }
 if (localStorage.sec12||localStorage.mili12){
   var elRecord=document.querySelector(".highestScore"+12)
-elRecord.innerHTML="record time on Expert level: "+localStorage.min12+":"+localStorage.sec12+":"+localStorage.mili12
+elRecord.innerHTML="record time on Expert level: "+localStorage.min12+":"+localStorage.sec12+"."+localStorage.mili12
 }
 }
 

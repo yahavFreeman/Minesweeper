@@ -437,7 +437,7 @@ function checkRecord() {
       localStorage.min +
       ":" +
       localStorage.sec +
-      ":" +
+      "." +
       localStorage.mili;
   } else if (gBoard.length === 8) {
     elRecord.innerHTML =
@@ -445,7 +445,7 @@ function checkRecord() {
       Number(localStorage.min8) +
       ":" +
       Number(localStorage.sec8) +
-      ":" +
+      "." +
       Number(localStorage.mili8);
   } else if (gBoard.length === 12) {
     elRecord.innerHTML =
@@ -453,7 +453,7 @@ function checkRecord() {
       Number(localStorage.min12) +
       ":" +
       Number(localStorage.sec12) +
-      ":" +
+      "." +
       Number(localStorage.mili12);
   }
 }
