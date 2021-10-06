@@ -54,19 +54,20 @@ function buildBoard(row, col) {
   printMat(gBoard, ".board");
 }
 
+//7BOOM feature starting function
 function sevenBoom() {
   is7Boom = true;
   initGame();
   alert("select your level");
 }
-
+//manual minning feature starting function
 function manual() {
   isManual = true;
   initGame();
   alert("select your level");
 }
 
-// placing the mines
+// placing the mines for the various game features
 function placeMines(level) {
   switch (level) {
     case 4:
@@ -141,7 +142,7 @@ function countMinesAround() {
   }
 }
 
-//manual mining option
+//manual mining feature
 function manualyClick(cell) {
   var locationArr = cell.classList[1].split("-");
   var location = {
@@ -153,7 +154,7 @@ function manualyClick(cell) {
   gBoard[location.i][location.j].isMine = true;
 }
 
-// checking the game events
+// checking the game events with correlation with the game features
 function cellClicked(whichCell, leftOrRight) {
   if (!isManual) {
     if (safe && !isHint) {
@@ -242,7 +243,7 @@ function cellClicked(whichCell, leftOrRight) {
   }
 }
 
-// bonus hint task
+// bonus hint task starting function
 function hint() {
   if (gHint) {
     isHint = true;
@@ -266,6 +267,9 @@ function expand(rowIdx, colIdx) {
       if (j < 0 || j > gBoard.length - 1) {
         continue;
       }
+      if(gBoard[i][j].isMarked){
+        continue
+      }
       loc[expandCounter] = {
         i: i,
         j: j,
@@ -275,6 +279,7 @@ function expand(rowIdx, colIdx) {
         !gBoard[i][j].isShown &&
         !gBoard[i][j].isMine
       ) {
+        console.log(gBoard[i][j].isMarked)
         score();
         gBoard[i][j].isShown = true;
         expandCounter++;
@@ -286,6 +291,7 @@ function expand(rowIdx, colIdx) {
           !gBoard[i][j].isMine &&
           !gBoard[i][j].isShown
         ) {
+          console.log(gBoard[i][j].isMarked)
           score();
         }
         gBoard[i][j].isShown = true;
@@ -295,6 +301,7 @@ function expand(rowIdx, colIdx) {
   }
 }
 
+//showing neighboring cells for the hint feature
 function showNeighbors(rowIdx, colIdx, isShow) {
   var loc = {};
   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
@@ -338,25 +345,14 @@ function checkMine(location) {
     elSmiley.innerText = "😮";
     changeSmiley();
   }
-  checkGameWon();
 }
 
 function gameOver() {
   clearInterval(gTimeInterval);
-  // alert("game over");
   isGame = false;
-  // initGame()
 }
 
-//returning the smiley to original emoji
-function changeSmiley() {
-  smileyTime = setTimeout(function () {
-    var elSmiley = document.querySelector(".smiley");
-    elSmiley.innerText = "😃";
-  }, 400);
-}
-
-//checkign game status
+//checking game status
 function checkGameWon() {
   if (gScore === gBoard.length ** 2 - mines) {
     for (var i = 0; i < gBoard.length; i++) {
@@ -374,12 +370,12 @@ function checkGameWon() {
     clearInterval(gTimeInterval);
     checkRecord();
     alert("YOU WON!!");
-    // initGame();
   } else {
     return;
   }
 }
 
+//making the game record times show
 function checkRecord() {
   if (gBoard.length === 4) {
     if (localStorage.sec || localStorage.mili) {
@@ -455,6 +451,7 @@ function checkRecord() {
   }
 }
 
+//creating the fafe click feature
 function safeClick() {
   if (isStart && isGame && !safe) {
     empties = getEmptyCells(gBoard);

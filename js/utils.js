@@ -45,7 +45,7 @@ function shuffle(items) {
 }
 
 function renderCell(location, value) {
-  if(value===0){
+  if(value===0 ||value===false){
     value=''
   }
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
@@ -63,9 +63,11 @@ function renderCell(location, value) {
   elCell.addEventListener(
     "contextmenu",
     function (ev) {
-      if (gLives === 0 || !isGame) {
+      if (gLives === 0) {
+        console.log('out')
         return true
       }
+      console.log('in')
       ev.preventDefault();
       if (elCell.innerHTML !== FLAG &&!gBoard[location.i][location.j].isShown) {
         if (gBoard[location.i][location.j].isMine) {
@@ -73,6 +75,7 @@ function renderCell(location, value) {
         }
         elCell.innerHTML = FLAG;
         gBoard[location.i][location.j].isMarked = true;
+        console.log(gBoard[location.i][location.j].isMarked)
       } else {
         gBoard[location.i][location.j].isMarked = false;
         elCell.innerHTML = value;
@@ -241,4 +244,12 @@ function score() {
   var elScore = document.querySelector(".keepScore");
   elScore.innerText = gScore;
   checkGameWon()
+}
+
+//returning the smiley to original emoji
+function changeSmiley() {
+  smileyTime = setTimeout(function () {
+    var elSmiley = document.querySelector(".smiley");
+    elSmiley.innerText = "😃";
+  }, 400);
 }
