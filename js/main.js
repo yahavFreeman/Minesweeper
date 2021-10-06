@@ -28,12 +28,13 @@ var manualMines;
 var gotTheMines;
 var expandCounter;
 var expandEnter;
-
+var noDouble
 // creating and setting the board
 function initGame(row = 4, col = 4) {
   gScore = 0;
   clearInterval(gTimeInterval);
   isStart = false;
+  noDouble=false
   gLives = gHint = gSafeCount = 3;
   isGame = true;
   safe = false;
@@ -53,6 +54,7 @@ function buildBoard(row, col) {
   gBoard = createMat(row, col);
   printMat(gBoard, ".board");
 }
+
 
 //7BOOM feature starting function
 function sevenBoom() {
@@ -156,6 +158,7 @@ function manualyClick(cell) {
 
 // checking the game events with correlation with the game features
 function cellClicked(whichCell, leftOrRight) {
+  console.log('in')
   if (!isManual) {
     if (safe && !isHint) {
       safe = false;
@@ -245,7 +248,7 @@ function cellClicked(whichCell, leftOrRight) {
 
 // bonus hint task starting function
 function hint() {
-  if (gHint) {
+  if (gHint &&isGame) {
     isHint = true;
   }
 }
@@ -279,7 +282,6 @@ function expand(rowIdx, colIdx) {
         !gBoard[i][j].isShown &&
         !gBoard[i][j].isMine
       ) {
-        console.log(gBoard[i][j].isMarked)
         score();
         gBoard[i][j].isShown = true;
         expandCounter++;
@@ -291,7 +293,6 @@ function expand(rowIdx, colIdx) {
           !gBoard[i][j].isMine &&
           !gBoard[i][j].isShown
         ) {
-          console.log(gBoard[i][j].isMarked)
           score();
         }
         gBoard[i][j].isShown = true;
@@ -334,7 +335,7 @@ function checkMine(location) {
     life();
     elSmiley.innerText = "🤕";
     changeSmiley();
-
+    checkGameWon()
     if (gLives === 0) {
       clearTimeout(smileyTime);
       elSmiley.innerText = "😫";
@@ -369,6 +370,7 @@ function checkGameWon() {
     }
     clearInterval(gTimeInterval);
     checkRecord();
+    isGame=false
     alert("YOU WON!!");
   } else {
     return;

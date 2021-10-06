@@ -52,8 +52,6 @@ function renderCell(location, value) {
   elCell.innerHTML = value;
   if (value === MINE) {
     elCell.classList.add("armed");
-
-
     if (gBoard[location.i][location.j].isShown) {
       elCell.classList.remove("armed");
     elCell.classList.remove("cell");
@@ -64,10 +62,8 @@ function renderCell(location, value) {
     "contextmenu",
     function (ev) {
       if (gLives === 0) {
-        console.log('out')
         return true
       }
-      console.log('in')
       ev.preventDefault();
       if (elCell.innerHTML !== FLAG &&!gBoard[location.i][location.j].isShown) {
         if (gBoard[location.i][location.j].isMine) {
@@ -75,7 +71,6 @@ function renderCell(location, value) {
         }
         elCell.innerHTML = FLAG;
         gBoard[location.i][location.j].isMarked = true;
-        console.log(gBoard[location.i][location.j].isMarked)
       } else {
         gBoard[location.i][location.j].isMarked = false;
         elCell.innerHTML = value;
@@ -83,13 +78,13 @@ function renderCell(location, value) {
           elCell.classList.add("armed");
         }
       }
-      checkGameWon();
-      return false;
-    
+      checkGameWon(); 
+      return false   
     },
     false
-  );
+  )
 }
+
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
