@@ -243,7 +243,7 @@ function score() {
 
 //returning the smiley to original emoji
 function changeSmiley() {
-  smileyTime = setTimeout(function () {
+  gSmileyTime = setTimeout(function () {
     var elSmiley = document.querySelector(".smiley");
     elSmiley.innerText = "😃";
   }, 400);

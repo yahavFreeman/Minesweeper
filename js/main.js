@@ -1,10 +1,9 @@
 "use strict";
 const MINE = '<img src="img/mines.png" class = "hide">';
 const FLAG = '<img src="img/Flag-red-icon.png">';
-const EMPTY = "";
 
 var gBoard = [];
-var isStart = false;
+var gIsStart = false;
 var gTimeInterval;
 var gSafeInterval;
 var safe;
@@ -13,9 +12,9 @@ var sec;
 var min;
 var mines;
 var gLives;
-var smileyTime;
+var gSmileyTime;
 var gScore;
-var isHint;
+var gIsHint;
 var gHint;
 var isGame;
 var canHint;
@@ -28,13 +27,12 @@ var manualMines;
 var gotTheMines;
 var expandCounter;
 var expandEnter;
-var noDouble
+
 // creating and setting the board
 function initGame(row = 4, col = 4) {
   gScore = 0;
   clearInterval(gTimeInterval);
-  isStart = false;
-  noDouble=false
+  gIsStart = false;
   gLives = gHint = gSafeCount = 3;
   isGame = true;
   safe = false;
@@ -160,7 +158,7 @@ function manualyClick(cell) {
 function cellClicked(whichCell, leftOrRight) {
   console.log('in')
   if (!isManual) {
-    if (safe && !isHint) {
+    if (safe && !gIsHint) {
       safe = false;
       gSafeCount--;
       lessSafe();
@@ -175,26 +173,26 @@ function cellClicked(whichCell, leftOrRight) {
       i: Number(locationArr[1]),
       j: Number(locationArr[2]),
     };
-    if (isHint && isStart) {
+    if (gIsHint && gIsStart) {
       showNeighbors(location.i, location.j, true);
       setTimeout(function () {
         showNeighbors(location.i, location.j, false);
       }, 1000);
-      isHint = false;
+      gIsHint = false;
       gHint--;
       hintsLeft();
       return;
     } else {
-      isHint = false;
+      gIsHint = false;
     }
-    if (!isStart) {
+    if (!gIsStart) {
       gBoard[location.i][location.j].isShown = true;
       placeMines(gBoard.length);
       markCell(location, gBoard[location.i][location.j].minesCount);
       gTimeInterval = setInterval(function () {
         timer();
       }, 100);
-      isStart = true;
+      gIsStart = true;
       canHint = true;
       if (gBoard[location.i][location.j].minesCount !== 0) {
         score();
@@ -213,7 +211,7 @@ function cellClicked(whichCell, leftOrRight) {
       gBoard[location.i][location.j].isShown = true;
       markCell(location, gBoard[location.i][location.j].minesCount);
       checkMine(location);
-    } else if (!isHint&&
+    } else if (!gIsHint&&
       !gBoard[location.i][location.j].isShown &&
       leftOrRight.button === 0 &&
       !gBoard[location.i][location.j].isMarked &&
@@ -249,13 +247,13 @@ function cellClicked(whichCell, leftOrRight) {
 // bonus hint task starting function
 function hint() {
   if (gHint &&isGame) {
-    isHint = true;
+    gIsHint = true;
   }
 }
 //creating the expand recursion feature
 function expand(rowIdx, colIdx) {
   var loc = [];
-  if(isHint){
+  if(gIsHint){
     return
   }
   if (expandEnter) {
@@ -337,7 +335,7 @@ function checkMine(location) {
     changeSmiley();
     checkGameWon()
     if (gLives === 0) {
-      clearTimeout(smileyTime);
+      clearTimeout(gSmileyTime);
       elSmiley.innerText = "😫";
       gameOver();
     }
@@ -455,7 +453,7 @@ function checkRecord() {
 
 //creating the fafe click feature
 function safeClick() {
-  if (isStart && isGame && !safe) {
+  if (gIsStart && isGame && !safe) {
     empties = getEmptyCells(gBoard);
     if (empties.length === 0) return;
     for (var i = 0; i < empties.length; i++) {
