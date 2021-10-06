@@ -1,6 +1,7 @@
 "use strict";
-const MINE = '<img src="img/mines.png" class = "hide">';
+const MINE = '<img src="img/red-mine.jpg" class = "hide">';
 const FLAG = '<img src="img/Flag-red-icon.png">';
+const SHOW_MINES = '<img src="img/mines.png" class = "hide">'
 
 var gBoard = [];
 var gIsStart = false;
@@ -354,9 +355,25 @@ function checkMine(location) {
 function gameOver() {
   gameOverSound.play()
   clearInterval(gTimeInterval);
+  showMines()
   isGame = false;
 }
-
+function showMines(){
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard.length; j++) {
+      if (gBoard[i][j].isMine&& gBoard[i][j].isMarked){
+        gBoard[i][j].isMarked=false
+        var elCell = document.querySelector(".cell-" +gBoard[i][j].location.i + "-" +gBoard[i][j].location.j);
+  elCell.innerHTML = SHOW_MINES;
+      }
+      if(gBoard[i][j].isMine&& !gBoard[i][j].isShown){
+        var elCell = document.querySelector(".cell-" +gBoard[i][j].location.i + "-" +gBoard[i][j].location.j);
+  elCell.innerHTML = SHOW_MINES;
+        markCell(gBoard[i][j].location,gBoard[i][j].minesCount)
+      }
+    }
+  }
+}
 //checking game status
 function checkGameWon() {
   if (gScore === gBoard.length ** 2 - mines) {
