@@ -374,7 +374,7 @@ function checkGameWon() {
     clearInterval(gTimeInterval);
     checkRecord();
     alert("YOU WON!!");
-    initGame();
+    // initGame();
   } else {
     return;
   }

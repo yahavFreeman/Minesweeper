@@ -45,6 +45,9 @@ function shuffle(items) {
 }
 
 function renderCell(location, value) {
+  if(value===0){
+    value=''
+  }
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.innerHTML = value;
   if (value === MINE) {
@@ -60,9 +63,10 @@ function renderCell(location, value) {
   elCell.addEventListener(
     "contextmenu",
     function (ev) {
+      if (gLives === 0 || !isGame) {
+        return true
+      }
       ev.preventDefault();
-  if (gLives !== 0 && isGame) {
-   
       if (elCell.innerHTML !== FLAG &&!gBoard[location.i][location.j].isShown) {
         if (gBoard[location.i][location.j].isMine) {
           elCell.classList.remove("armed");
@@ -78,7 +82,7 @@ function renderCell(location, value) {
       }
       checkGameWon();
       return false;
-    }
+    
     },
     false
   );
@@ -153,7 +157,6 @@ function markCell(location, howManyMines) {
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.classList.remove("armed")
   return
-
   }
   var elCell = document.querySelector(".cell-" + location.i + "-" + location.j);
   elCell.classList.add("mark" + howManyMines);
@@ -182,9 +185,9 @@ function life() {
   if (gLives === 3) {
     elLife.innerText ="🖤 🖤 🖤";
   } else if (gLives === 2) {
-    elLife.innerText = "🖤 🖤";
+    elLife.innerText = "🖤 🖤  ";
   } else if (gLives === 1) {
-    elLife.innerText = "🖤";
+    elLife.innerText = "🖤      ";
   } else {
     elLife.innerText = "";
   }
@@ -237,4 +240,5 @@ function score() {
   gScore += 1;
   var elScore = document.querySelector(".keepScore");
   elScore.innerText = gScore;
+  checkGameWon()
 }
